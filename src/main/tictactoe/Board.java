@@ -22,6 +22,7 @@ public class Board {
         private void initBoard() {
             board = new char[size][size];
             turns = size * size;
+            winner = 0;
             getPlayers();
             printCurrentBoard();
         }
