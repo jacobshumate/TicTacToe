@@ -15,13 +15,13 @@ public class Board {
         // Construct board size and turns.
         public Board(int n) {
             size = n;
-            turns = n * n;
             numOfGames = 0;
         }
 
         // Initialize board.
         private void initBoard() {
             board = new char[size][size];
+            turns = size * size;
             getPlayers();
             printCurrentBoard();
         }
@@ -60,10 +60,10 @@ public class Board {
         // Initialize games.
         public void initGames() {
             initBoard();
-            int turns = this.turns;
             while(turns > 0) {
-                if(move(player1, turns) || turns == 0) break;
-                if(move(player2, turns) || turns == 0) break;
+                System.out.println("turns left: " + turns);
+                if(move(player1) || turns == 0) break;
+                if(move(player2) || turns == 0) break;
             }
             numOfWins[numOfWins.length - numOfGames] = winner;
             displayWinner();
@@ -85,13 +85,13 @@ public class Board {
             for (int i = 0; i < numOfWins.length; i++) {
                 if (numOfWins[i] == winner) winnersInRow++;
             }
-            if (winnersInRow == numOfWins.length) {
+            if (winner != 0 && winnersInRow == numOfWins.length) {
                 System.out.println("Player " + winner + " has won " + winnersInRow + " times in a row!");
             }
         }
 
         // Takes player input, validates and sets X or O depending on who's turn it is.
-        private boolean move(Player player, int turns) {
+        private boolean move(Player player) {
             int move = getPlayerInput(player);
             while (validateMove(player, move) == false) {
                 move = getPlayerInput(player);
