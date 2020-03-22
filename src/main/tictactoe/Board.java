@@ -61,9 +61,8 @@ public class Board {
         public void initGames() {
             initBoard();
             while(turns > 0) {
-                System.out.println("turns left: " + turns);
-                if(move(player1) || turns == 0) break;
-                if(move(player2) || turns == 0) break;
+                if(turns == 0 || move(player1)) break;
+                if(turns == 0 || move(player2)) break;
             }
             numOfWins[numOfWins.length - numOfGames] = winner;
             displayWinner();
