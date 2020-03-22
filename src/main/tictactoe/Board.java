@@ -93,7 +93,7 @@ public class Board {
         // Takes player input, validates and sets X or O depending on who's turn it is.
         private boolean move(Player player, int turns) {
             int move = getPlayerInput(player);
-            while (validateMove(player, move) == 0) {
+            while (validateMove(player, move) == false) {
                 move = getPlayerInput(player);
             }
 
@@ -190,22 +190,22 @@ public class Board {
 
         // Checks if choice of board index already contains an X or O,
         // otherwise set the row and col for that player for reference.
-        private int validateMove(Player player, int choice) {
+        private boolean validateMove(Player player, int choice) {
             for(int i = 0; i < board.length; i++) {
                 for(int j = 0; j < board[0].length; j++) {
                     if (--choice == 0) {
                         if (board[i][j] == 0) {
                             player.setCurrentRow(i);
                             player.setCurrentCol(j);
-                            return 1;
+                            return true;
                         } else {
                             System.out.println("This choice has already been taken.");
-                            return 0;
+                            return false;
                         }
                     }
                 }
             }
-            return 0;
+            return false;
         }
 
         // Sets X or O in the board by row and col position.
