@@ -91,25 +91,19 @@ public class Board {
 
         // Takes player input, validates and sets X or O depending on who's turn it is.
         private boolean move(Player player) {
-            int move = getPlayerInput(player);
-            while (validateMove(player, move) == false) {
-                move = getPlayerInput(player);
-            }
-
+            player.getInput(board);
             int row = player.getCurrentRow(), col = player.getCurrentCol();
             char symbol = player.getSymbol();
+
             setMove(symbol, row, col);
             --turns;
             printCurrentBoard();
 
-            if (checkDiagonally(symbol, row, col)) {
+            if (checkDiagonally(symbol, row, col) || checkVertical(symbol, col) || checkHorizontal(symbol, row)) {
                 winner = symbol;
                 return true;
             }
-            if(checkVertical(symbol, col) || checkHorizontal(symbol, row)) {
-                winner = symbol;
-                return true;
-            }
+
             return false;
         }
 
@@ -169,42 +163,6 @@ public class Board {
                 System.out.println();
             }
             System.out.println();
-        }
-
-        // Ask for player input for board index choice.
-        private int getPlayerInput(Player player) {
-            int num = -1;
-            Scanner sc = new Scanner(System.in);
-            while(num < 0 || num > (board.length * board[0].length)) {
-                System.out.println("Player " + player.getSymbol() + ", where to? ");
-                while (!sc.hasNextInt()) {
-                    System.out.println("That's not a number!");
-                    sc.next(); // this is important!
-                }
-                num = sc.nextInt();
-            }
-            System.out.println();
-            return num;
-        }
-
-        // Checks if choice of board index already contains an X or O,
-        // otherwise set the row and col for that player for reference.
-        private boolean validateMove(Player player, int choice) {
-            for(int i = 0; i < board.length; i++) {
-                for(int j = 0; j < board[0].length; j++) {
-                    if (--choice == 0) {
-                        if (board[i][j] == 0) {
-                            player.setCurrentRow(i);
-                            player.setCurrentCol(j);
-                            return true;
-                        } else {
-                            System.out.println("This choice has already been taken.");
-                            return false;
-                        }
-                    }
-                }
-            }
-            return false;
         }
 
         // Sets X or O in the board by row and col position.
