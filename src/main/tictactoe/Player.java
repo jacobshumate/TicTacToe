@@ -28,12 +28,12 @@ public class Player {
             input = sc.nextInt();
         }
         System.out.println();
-        if (validateInput(board, input) == false) getInput(board);
+        if (!validateInput(board, input)) getInput(board);
     }
 
     // Checks if choice of board index already contains an X or O,
     // otherwise set the row and col for that player for reference.
-    public boolean validateInput(char[][] board, int input) {
+    private boolean validateInput(char[][] board, int input) {
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[0].length; j++) {
                 if (--input == 0) {
